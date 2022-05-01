@@ -1,0 +1,65 @@
+<script>
+import axios from 'axios';
+import mapboxgl from 'mapbox-gl'; // or "const mapboxgl = require('mapbox-gl');"
+export default {
+  data: function () {
+    return {
+      message: "Look At All The Activities!",
+      activities: []
+    };
+  },
+  mounted: function () {
+    mapboxgl.accessToken = 'pk.eyJ1IjoiY21idXRsZXIiLCJhIjoiY2wyNTFuMzR3MXpvYzNjcGUyM2RjNWJleiJ9.rNd4UZgrbrcRLWcmRRbEUw';
+    const map = new mapboxgl.Map({
+      container: 'map', // container ID
+      style: 'mapbox://styles/mapbox/streets-v11', // style URL
+      center: [-87.6298, 41.8781], // starting position [lng, lat]
+      zoom: 9 // starting zoom
+
+    });
+    map
+    axios.get("http://localhost:3000/activities.json").then(response => {
+      console.log(response.data);
+      this.activities = response.data;
+      this.activities.forEach(activity =>
+        new mapboxgl.Marker()
+          .setLngLat([activity.longitude, activity.latitude])
+          .addTo(map)
+        // console.log(activity.name)
+      )
+    });
+
+    // );
+    // this.indexActivities()
+
+
+  },
+  methods: {
+    indexActivities: function () {
+      console.log("Show this big map with activities");
+      this.activities.forEach(activity =>
+        new mapboxgl.Marker()
+          .setLngLat([activity.longitude, activity.latitude])
+          .addTo(this.map)
+      );
+    }
+  },
+};
+
+</script>
+
+
+
+<template>
+  <div class="home">
+    <h1>{{ message }}</h1>
+    <button v-on:click="this.indexActivities()">Show Marker</button>
+    <div id='map' style='width: 800px; height: 500px;'></div>
+    <p v-for="activity in activities" v-bind:key="activity.id">
+      {{ activity.latitude }}, {{ activity.longitude }}
+    </p>
+  </div>
+</template>
+
+<style>
+</style>
