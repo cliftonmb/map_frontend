@@ -6,6 +6,7 @@ export default {
     return {
       message: "Look At All The Activities!",
       activities: []
+      // popup: []
     };
   },
   mounted: function () {
@@ -21,16 +22,31 @@ export default {
     axios.get("http://localhost:3000/activities.json").then(response => {
       console.log(response.data);
       this.activities = response.data;
-      this.activities.forEach(activity =>
+      // this.activities.forEach(activity =>
+      //   new mapboxgl.Marker()
+      //     .setLngLat([activity.longitude, activity.latitude])
+      //     .setPopup(this.popup) // sets popup on this marker
+      //     .addTo(map),
+      //   // create the popup
+      //   this.popup = new mapboxgl.Popup({ offset: 25 }).setText(
+      //     `${this.activity.name}`
+      //   )
+      //   // console.log(activity.name)
+      // )
+      for (var i = 0, len = this.activities.length; i < len; i++) {
         new mapboxgl.Marker()
-          .setLngLat([activity.longitude, activity.latitude])
-          .addTo(map)
+          .setLngLat([this.activities[i].longitude, this.activities[i].latitude])
+          .setPopup(this.popup) // sets popup on this marker
+          .addTo(map),
+          // // create the popup
+          this.popup = new mapboxgl.Popup({ offset: 25 }).setText(
+            `${this.activities[i].name}
+            ${this.activities[i].address}`
+          )
         // console.log(activity.name)
-      )
-    });
 
-    // );
-    // this.indexActivities()
+      }
+    });
 
 
   },
@@ -55,9 +71,9 @@ export default {
     <h1>{{ message }}</h1>
     <button v-on:click="this.indexActivities()">Show Marker</button>
     <div id='map' style='width: 800px; height: 500px;'></div>
-    <p v-for="activity in activities" v-bind:key="activity.id">
-      {{ activity.latitude }}, {{ activity.longitude }}
-    </p>
+    <!-- <p v-for="activity in activities" v-bind:key="activity.id">
+      {{ activity.latitude }}, {{ activity.longitude }} -->
+    <!-- </p> -->
   </div>
 </template>
 
