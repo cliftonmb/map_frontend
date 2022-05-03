@@ -6,46 +6,50 @@ export default {
     return {
       message: "Look At All The Activities!",
       activities: []
+      // mapbox_token: []
       // popup: []
     };
   },
   mounted: function () {
-    mapboxgl.accessToken = 'pk.eyJ1IjoiY21idXRsZXIiLCJhIjoiY2wyNTFuMzR3MXpvYzNjcGUyM2RjNWJleiJ9.rNd4UZgrbrcRLWcmRRbEUw';
-    const map = new mapboxgl.Map({
-      container: 'map', // container ID
-      style: 'mapbox://styles/mapbox/streets-v11', // style URL
-      center: [-87.6298, 41.8781], // starting position [lng, lat]
-      zoom: 9 // starting zoom
+    axios.get("http://localhost:3000/mapbox_token.json").then(response => {
+      const mapbox_token = response.data.message;
+      mapboxgl.accessToken = mapbox_token;
+      const map = new mapboxgl.Map({
+        container: 'map', // container ID
+        style: 'mapbox://styles/mapbox/streets-v11', // style URL
+        center: [-87.6298, 41.8781], // starting position [lng, lat]
+        zoom: 9 // starting zoom
 
-    });
-    map
-    axios.get("http://localhost:3000/activities.json").then(response => {
-      console.log(response.data);
-      this.activities = response.data;
-      // this.activities.forEach(activity =>
-      //   new mapboxgl.Marker()
-      //     .setLngLat([activity.longitude, activity.latitude])
-      //     .setPopup(this.popup) // sets popup on this marker
-      //     .addTo(map),
-      //   // create the popup
-      //   this.popup = new mapboxgl.Popup({ offset: 25 }).setText(
-      //     `${this.activity.name}`
-      //   )
-      //   // console.log(activity.name)
-      // )
-      for (var i = 0, len = this.activities.length; i < len; i++) {
-        new mapboxgl.Marker()
-          .setLngLat([this.activities[i].longitude, this.activities[i].latitude])
-          .setPopup(this.popup) // sets popup on this marker
-          .addTo(map),
-          // // create the popup
-          this.popup = new mapboxgl.Popup({ offset: 25 }).setText(
-            `${this.activities[i].name}
+      });
+      map
+      axios.get("http://localhost:3000/activities.json").then(response => {
+        console.log(response.data);
+        this.activities = response.data;
+        // this.activities.forEach(activity =>
+        //   new mapboxgl.Marker()
+        //     .setLngLat([activity.longitude, activity.latitude])
+        //     .setPopup(this.popup) // sets popup on this marker
+        //     .addTo(map),
+        //   // create the popup
+        //   this.popup = new mapboxgl.Popup({ offset: 25 }).setText(
+        //     `${this.activity.name}`
+        //   )
+        //   // console.log(activity.name)
+        // )
+        for (var i = 0, len = this.activities.length; i < len; i++) {
+          new mapboxgl.Marker()
+            .setLngLat([this.activities[i].longitude, this.activities[i].latitude])
+            .setPopup(this.popup) // sets popup on this marker
+            .addTo(map),
+            // // create the popup
+            this.popup = new mapboxgl.Popup({ offset: 25 }).setText(
+              `${this.activities[i].name}
             ${this.activities[i].address}`
-          )
-        // console.log(activity.name)
+            )
+          // console.log(activity.name)
 
-      }
+        }
+      })
     });
 
 
