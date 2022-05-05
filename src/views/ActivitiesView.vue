@@ -5,52 +5,66 @@ export default {
   data: function () {
     return {
       message: "Look At All The Activities!",
-      activities: []
-      // mapbox_token: []
+      markers: [],
+      activities: [],
+      activitiesWithCurrentMarker: []
+      // mapboxToken: []
       // popup: []
     };
   },
   mounted: function () {
-    axios.get("http://localhost:3000/mapbox_token.json").then(response => {
-      const mapbox_token = response.data.message;
-      mapboxgl.accessToken = mapbox_token;
-      const map = new mapboxgl.Map({
-        container: 'map', // container ID
-        style: 'mapbox://styles/mapbox/streets-v11', // style URL
-        center: [-87.6298, 41.8781], // starting position [lng, lat]
-        zoom: 9 // starting zoom
+    axios.get("http://localhost:3000/activities.json").then(response => {
+      console.log(response.data);
+      this.activities = response.data;
+    }),
+      axios.get("http://localhost:3000/mapbox_token.json").then(response => {
+        const mapboxToken = response.data.message;
+        mapboxgl.accessToken = mapboxToken;
+        const map = new mapboxgl.Map({
+          container: 'map', // container ID
+          style: 'mapbox://styles/mapbox/streets-v11', // style URL
+          center: [-87.6298, 41.8781], // starting position [lng, lat]
+          zoom: 9 // starting zoom
 
-      });
-      map
-      axios.get("http://localhost:3000/activities.json").then(response => {
-        console.log(response.data);
-        this.activities = response.data;
-        // this.activities.forEach(activity =>
-        //   new mapboxgl.Marker()
-        //     .setLngLat([activity.longitude, activity.latitude])
-        //     .setPopup(this.popup) // sets popup on this marker
-        //     .addTo(map),
-        //   // create the popup
-        //   this.popup = new mapboxgl.Popup({ offset: 25 }).setText(
-        //     `${this.activity.name}`
-        //   )
-        //   // console.log(activity.name)
-        // )
-        for (var i = 0, len = this.activities.length; i < len; i++) {
-          new mapboxgl.Marker()
-            .setLngLat([this.activities[i].longitude, this.activities[i].latitude])
-            .setPopup(this.popup) // sets popup on this marker
-            .addTo(map),
+        });
+        map
+        axios.get("http://localhost:3000/markers.json").then(response => {
+          console.log(response.data);
+          this.markers = response.data;
+          // this.activities.forEach(activity =>
+          //   new mapboxgl.Marker()
+          //     .setLngLat([activity.longitude, activity.latitude])
+          //     .setPopup(this.popup) // sets popup on this marker
+          //     .addTo(map),
+          //   // create the popup
+          //   this.popup = new mapboxgl.Popup({ offset: 25 }).setText(
+          //     `${this.activity.name}`
+          //   )
+          //   // console.log(activity.name)
+          // )
+          for (var i = 0, len = this.markers.length; i < len; i++) {
+            new mapboxgl.Marker()
+              .setLngLat([this.markers[i].longitude, this.markers[i].latitude])
+              .setPopup(this.popup) // sets popup on this marker
+              .addTo(map);
             // // create the popup
-            this.popup = new mapboxgl.Popup({ offset: 25 }).setText(
-              `${this.activities[i].name}
-            ${this.activities[i].address}`
-            )
-          // console.log(activity.name)
+            this.activitiesWithCurrentMarker = this.activities.filter(activity => activity.marker_id === this.markers[i].id);
+            console.log(this.activitiesWithCurrentMarker);
 
-        }
-      })
-    });
+            this.popup = new mapboxgl.Popup({ offset: 25 }).setText(
+              `${this.markers[i].id}
+              ${this.activitiesWithCurrentMarker[0].name}`,
+              this.activitiesWithCurrentMarker.forEach(activity => {
+                console.log(activity);
+                console.log(this.markers[i].activities_address);
+                console.log(this.markers[i].id);
+              }),
+            )
+            // console.log(activity.name)
+
+          }
+        })
+      });
 
 
   },
@@ -73,6 +87,10 @@ export default {
 <template>
   <div class="home">
     <h1>{{ message }}</h1>
+    <p v-for="activity in activitiesWithCurrentMarker" v-bind:key="activity">
+      {{ activty.name }}
+    </p>
+    <p>hello</p>
     <button v-on:click="this.indexActivities()">Show Marker</button>
     <div id='map' style='width: 800px; height: 500px;'></div>
     <!-- <p v-for="activity in activities" v-bind:key="activity.id">
