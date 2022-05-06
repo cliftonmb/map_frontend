@@ -6,8 +6,8 @@ export default {
     return {
       message: "Look At All The Activities!",
       markers: [],
-      activities: [],
-      activitiesWithCurrentMarker: []
+      activitiesWithCurrentMarker: [],
+      activities: []
       // mapboxToken: []
       // popup: []
     };
@@ -42,6 +42,7 @@ export default {
           //   )
           //   // console.log(activity.name)
           // )
+          var y;
           for (var i = 0, len = this.markers.length; i < len; i++) {
             new mapboxgl.Marker()
               .setLngLat([this.markers[i].longitude, this.markers[i].latitude])
@@ -50,10 +51,16 @@ export default {
             // // create the popup
             this.activitiesWithCurrentMarker = this.activities.filter(activity => activity.marker_id === this.markers[i].id);
             console.log(this.activitiesWithCurrentMarker);
-
+            const x = this.activitiesWithCurrentMarker;
+            y = function showActivities() {
+              var activities_object = []
+              x.forEach(activityToShow =>
+                activities_object.push(activityToShow.name)
+              )
+              return activities_object;
+            }
             this.popup = new mapboxgl.Popup({ offset: 25 }).setText(
-              `${this.markers[i].id}
-              ${this.activitiesWithCurrentMarker[0].name}`,
+              `${y()}`,
               this.activitiesWithCurrentMarker.forEach(activity => {
                 console.log(activity);
                 console.log(this.markers[i].activities_address);
@@ -87,15 +94,16 @@ export default {
 <template>
   <div class="home">
     <h1>{{ message }}</h1>
-    <p v-for="activity in activitiesWithCurrentMarker" v-bind:key="activity">
-      {{ activty.name }}
-    </p>
     <p>hello</p>
     <button v-on:click="this.indexActivities()">Show Marker</button>
     <div id='map' style='width: 800px; height: 500px;'></div>
-    <!-- <p v-for="activity in activities" v-bind:key="activity.id">
-      {{ activity.latitude }}, {{ activity.longitude }} -->
-    <!-- </p> -->
+    <div v-for="activity in activitiesWithCurrentMarker" v-bind:key="activity.id">
+      {{ activty.name }}
+    </div>
+    <!-- <div v-for="product in products" v-bind:key="product.id">
+      {{ product }}
+    </div> -->
+
   </div>
 </template>
 
