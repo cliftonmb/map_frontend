@@ -42,7 +42,7 @@ export default {
           //   )
           //   // console.log(activity.name)
           // )
-          var y;
+          var y
           for (var i = 0, len = this.markers.length; i < len; i++) {
             new mapboxgl.Marker()
               .setLngLat([this.markers[i].longitude, this.markers[i].latitude])
@@ -55,11 +55,11 @@ export default {
             y = function showActivities() {
               var activities_object = []
               x.forEach(activityToShow =>
-                activities_object.push(activityToShow.name)
+                activities_object.push(`${activityToShow.name}: ${activityToShow.address} <a href="http://localhost:8080/activity_info/${activityToShow.id}">More Info</a>`)
               )
               return activities_object;
             }
-            this.popup = new mapboxgl.Popup({ offset: 25 }).setText(
+            this.popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
               `${y()}`,
               this.activitiesWithCurrentMarker.forEach(activity => {
                 console.log(activity);
@@ -78,11 +78,11 @@ export default {
   methods: {
     indexActivities: function () {
       console.log("Show this big map with activities");
-      this.activities.forEach(activity =>
-        new mapboxgl.Marker()
-          .setLngLat([activity.longitude, activity.latitude])
-          .addTo(this.map)
-      );
+      // this.activities.forEach(activity =>
+      //   new mapboxgl.Marker()
+      //     .setLngLat([activity.longitude, activity.latitude])
+      //     .addTo(this.map)
+      // );
     }
   },
 };
@@ -94,6 +94,10 @@ export default {
 <template>
   <div class="home">
     <h1>{{ message }}</h1>
+    <a href="http://localhost:8080">Google</a>
+
+
+
     <p>hello</p>
     <button v-on:click="this.indexActivities()">Show Marker</button>
     <div id='map' style='width: 800px; height: 500px;'></div>

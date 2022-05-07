@@ -1,8 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ActivitiesView from '../views/ActivitiesView.vue'
+import ActivityInfo from '../views/ActivityInfo.vue'
 
 const routes = [
+  {
+    path: '/activity_info/:id',
+    name: 'activity_info',
+    component: ActivityInfo
+  },
   {
     path: '/activities',
     name: 'activities',
