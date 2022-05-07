@@ -55,7 +55,7 @@ export default {
             y = function showActivities() {
               var activities_object = []
               x.forEach(activityToShow =>
-                activities_object.push(`${activityToShow.name}: ${activityToShow.address} <a href="http://localhost:8080/activity_info/${activityToShow.id}">More Info</a>`)
+                activities_object.push(`${activityToShow.name}: ${activityToShow.address}, <br> <a href="http://localhost:8080/activity_info/${activityToShow.id}">More Info</a> <br>`)
               )
               return activities_object;
             }
