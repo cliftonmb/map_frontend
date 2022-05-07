@@ -75,16 +75,7 @@ export default {
 
 
   },
-  methods: {
-    indexActivities: function () {
-      console.log("Show this big map with activities");
-      // this.activities.forEach(activity =>
-      //   new mapboxgl.Marker()
-      //     .setLngLat([activity.longitude, activity.latitude])
-      //     .addTo(this.map)
-      // );
-    }
-  },
+  methods: {},
 };
 
 </script>
