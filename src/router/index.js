@@ -1,9 +1,15 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import ActivitiesView from '../views/ActivitiesView.vue'
-import ActivityInfo from '../views/ActivityInfo.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import HomeView from '../views/HomeView.vue';
+import ActivitiesView from '../views/ActivitiesView.vue';
+import ActivityInfo from '../views/ActivityInfo.vue';
+import SignupView from "../views/SignupView.vue";
+import LoginView from "../views/LoginView.vue";
+import LogoutView from "../views/LogoutView.vue";
 
 const routes = [
+  { path: "/logout", name: "logout", component: LogoutView },
+  { path: "/login", name: "login", component: LoginView },
+  { path: "/signup", name: "signup", component: SignupView },
   {
     path: '/activity_info/:id',
     name: 'activity_info',

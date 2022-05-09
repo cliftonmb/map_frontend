@@ -3,7 +3,10 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link> |
     <router-link to="/activities">Activities</router-link> |
-    <router-link to="/activity_info/:id">Activity Info</router-link>
+    <router-link to="/activity_info/:id">Activity Info</router-link> |
+    <router-link to="/signup">Signup</router-link> |
+    <router-link to="/login">Login</router-link> |
+    <router-link to="/logout">Logout</router-link>
   </nav>
   <router-view />
 </template>

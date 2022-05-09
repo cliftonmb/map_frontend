@@ -27,6 +27,7 @@ export default {
 
 <template>
   <div class="home">
+
     <h1> {{ activity.name }}</h1>
     <img v-bind:src="activity.image_url" />
     <!-- <router-link class="card-link" v-bind:to="`/activities/${recipe.id}`">More Info</router-link> -->
