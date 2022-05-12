@@ -62,7 +62,7 @@ export default {
             y = function showActivities() {
               var activities_object = []
               x.forEach(activityToShow =>
-                activities_object.push(`${activityToShow.name}: ${activityToShow.date} ${activityToShow.address}, <br> <a href="http://localhost:8080/activity_info/${activityToShow.id}">More Info</a> <br>`)
+                activities_object.push(`${activityToShow.name}: ${activityToShow.date} ${activityToShow.address}, <br> <a href="http://localhost:8080/activity_info/${activityToShow.id}">More Info</a> <br> <button v-on:click="addToFavorites()">Add To Favorites</button>`)
               )
               return activities_object;
             }
@@ -84,7 +84,11 @@ export default {
 
 
   },
-  methods: {},
+  methods: {
+    addToFavorites: function () {
+      console.log("adding to faves");
+    }
+  },
 };
 
 </script>

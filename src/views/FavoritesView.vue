@@ -5,7 +5,7 @@ export default {
   data: function () {
     return {
       message: "Favorites",
-      favorites: []
+      favorites: null
     };
   },
   created: function () {
@@ -16,7 +16,12 @@ export default {
     })
 
   },
-  methods: {},
+  methods: {
+    destroyFavorites: function () {
+      console.log("Remove from favorites");
+      console.log(this.favorites);
+    }
+  },
 };
 </script>
 
@@ -29,6 +34,7 @@ export default {
       <p>
         <router-link v-bind:to="`/activity_info/${favorite[0].id}`">More Info</router-link>
       </p>
+      <button v-on:click="destroyFavorites()">Remove From Favorites</button>
     </li>
   </div>
 </template>
