@@ -9,29 +9,41 @@ export default {
     return {
       message: "Welcome to Vue.js!",
       activity: [],
-      favorites: []
+      favorites: [],
+      youtube: null
     };
   },
   created: function () {
     axios.get(`http://localhost:3000/activities/${this.$route.params.id}.json`).then(response => {
-      console.log(response.data);
+      console.log(response.data);  // CONSOLE LOG HERE
       this.activity = response.data;
+      // html string
+      const htmlStr = this.activity.youtube;
+      console.log(htmlStr)
+      // make a new parser
+      const parser = new DOMParser();
+
+      // convert html string into DOM
+      const document = parser.parseFromString(htmlStr, "text/html");
+
+      this.youtube = document.body.querySelector("iframe").src;
+      console.log(this.youtube)  // CONSOLE LOG HERE
     })
   },
   methods: {
     createFavorites: function () {
-      console.log("adding to faves");
+      console.log("adding to faves");  // CONSOLE LOG HERE
       var params = {
         activity_id: this.activity.id
       }
       axios.post("http://localhost:3000/favorites.json", params).then((response) => {
-        console.log(response.data);
+        console.log(response.data);  // CONSOLE LOG HERE
         this.favorites = response.data;
         this.$router.push("/favorites");
       })
     },
     destroyFavorites: function () {
-      console.log("removing this favorite");
+      console.log("removing this favorite");  // CONSOLE LOG HERE
       // var params = this.favorites.id
       axios.delete(`http://localhost:3000/favorites/${this.activity.id}.json`).then((response) => {
         console.log(response)
@@ -48,7 +60,9 @@ export default {
     <img v-bind:src="activity.image_url" />
     <button v-on:click="createFavorites()">Add to Favorites</button>
     <button v-on:click="destroyFavorites()">Remove From Favorites</button>
-    <section>{{ activity.youtube }}</section>
+    <section><iframe width="640" height="360" v-bind:src="youtube" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe></section>
     <!-- <router-link class="card-link" v-bind:to="`/activities/${recipe.id}`">More Info</router-link> -->
   </div>
 </template>
@@ -62,6 +76,6 @@ img {
 </style>
 
 <!-- <iframe width="640" height="360"
-        src="http://www.youtube.com/embed/videoseries?list=PLqyewHETEzWVGRqitjXmeHePvTbxQc2U_" frameborder="0"
+        v-bind:src="youtube" frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen></iframe> -->
