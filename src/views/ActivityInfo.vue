@@ -76,10 +76,10 @@ export default {
         allowfullscreen></iframe></section>
     <h2>Learn more about {{ activity.name }}</h2>
     <p>Date: {{ activity.date }}</p>
-    <p><a v-bind:href="activity.twitter">Twitter</a></p>
-    <p><a v-bind:href="activity.homepage">Homepage</a></p>
-    <p><a v-bind:href="activity.instagram">Instagram</a></p>
-    <p><a v-bind:href="activity.ticketmaster">Ticketmaster</a></p>
+    <p><a v-if="activity.twitter !== null" v-bind:href="activity.twitter">Twitter</a></p>
+    <p><a v-if="activity.homepage !== null" v-bind:href="activity.homepage">Homepage</a></p>
+    <p><a v-if="activity.instagram !== null" v-bind:href="activity.instagram">Instagram</a></p>
+    <p><a v-if="activity.ticketmaster !== null" v-bind:href="activity.ticketmaster">Ticketmaster</a></p>
     <!-- <router-link class="card-link" v-bind:to="`/activities/${recipe.id}`">More Info</router-link> -->
   </div>
 </template>
