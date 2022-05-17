@@ -10,7 +10,8 @@ export default {
       message: "Welcome to Vue.js!",
       activity: [],
       favorites: [],
-      youtube: null
+      youtube: null,
+      favorited: false
     };
   },
   created: function () {
@@ -32,6 +33,7 @@ export default {
   },
   methods: {
     createFavorites: function () {
+      this.favorited = true
       console.log("adding to faves");  // CONSOLE LOG HERE
       var params = {
         activity_id: this.activity.id
@@ -39,43 +41,64 @@ export default {
       axios.post("http://localhost:3000/favorites.json", params).then((response) => {
         console.log(response.data);  // CONSOLE LOG HERE
         this.favorites = response.data;
-        this.$router.push("/favorites");
+        // this.$router.push("/favorites");
       })
     },
     destroyFavorites: function () {
+      this.favorited = false
       console.log("removing this favorite");  // CONSOLE LOG HERE
       // var params = this.favorites.id
       axios.delete(`http://localhost:3000/favorites/${this.activity.id}.json`).then((response) => {
         console.log(response)
       })
-    }
+    },
+
   },
 };
+
 </script>
 
 <template>
   <div class="home">
 
     <h1> {{ activity.name }}</h1>
+    <div class="static"><img v-if="favorited" v-on:click="destroyFavorites()"
+        src="https://crissov.github.io/unicode-proposals/img/pink-heart_twemoji.svg" height="35" width="35">
+      <img v-else v-on:click="createFavorites()"
+        src="https://crissov.github.io/unicode-proposals/img/gray-heart_emojitwo.svg" height="35" width="35">
+    </div>
     <img v-bind:src="activity.image_url" />
-    <button v-on:click="createFavorites()">Add to Favorites</button>
-    <button v-on:click="destroyFavorites()">Remove From Favorites</button>
+
+    <!-- <button v-on:click="createFavorites()">Add to Favorites</button>
+    <button v-on:click="destroyFavorites()">Remove From Favorites</button> -->
     <section><iframe width="640" height="360" v-bind:src="youtube" frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen></iframe></section>
+    <h2>Learn more about {{ activity.name }}</h2>
+    <p>Date: {{ activity.date }}</p>
+    <p><a v-bind:href="activity.twitter">Twitter</a></p>
+    <p><a v-bind:href="activity.homepage">Homepage</a></p>
+    <p><a v-bind:href="activity.instagram">Instagram</a></p>
+    <p><a v-bind:href="activity.ticketmaster">Ticketmaster</a></p>
     <!-- <router-link class="card-link" v-bind:to="`/activities/${recipe.id}`">More Info</router-link> -->
   </div>
 </template>
-  <!-- <img v-bind:src="favorite[0].image_url" />
-<router-link v-bind:to="`/activity_info/${favorite[0].id}`">More Info</router-link> -->
-<!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/qod03PVTLqk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+  
 <style>
+h1 {
+  text-align: center;
+}
+
 img {
   width: 250px;
 }
+
+div.static {
+  position: static;
+  text-align: left;
+
+  /* border: 3px solid #73AD21; */
+}
 </style>
 
-<!-- <iframe width="640" height="360"
-        v-bind:src="youtube" frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen></iframe> -->
+<!-- /* <img src="img/1f5a4_emojitwo.svg" alt="Black Heart"> */ -->

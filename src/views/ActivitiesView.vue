@@ -62,7 +62,7 @@ export default {
             y = function showActivities() {
               var activities_object = []
               x.forEach(activityToShow =>
-                activities_object.push(`${activityToShow.name}: ${activityToShow.date} ${activityToShow.address}, <br> <a href="http://localhost:8080/activity_info/${activityToShow.id}">More Info</a> <br> <button v-on:click="addToFavorites()">Add To Favorites</button>`)
+                activities_object.push(`${activityToShow.name}: ${activityToShow.date} ${activityToShow.address} <br> <a href="http://localhost:8080/activity_info/${activityToShow.id}">More Info</a>`)
               )
               return activities_object;
             }
@@ -74,7 +74,8 @@ export default {
                 console.log(this.markers[i].id); // CONSOLE LOG HERE
               }),
             )
-            this.marker.setPopup(this.popup) // sets popup on this marker
+            this.marker.setPopup(this.popup), // sets popup on this marker
+              this.popup.setMaxWidth("600px")
             // console.log(activity.name) // CONSOLE LOG HERE
 
           }
@@ -100,7 +101,7 @@ export default {
     <h1>{{ message }}</h1>
     <a href="http://localhost:8080">Google</a>
 
-    <div id='map' style='width: 800px; height: 500px;'></div>
+    <div id='map' style='width: 1000px; height: 800px;'></div>
     <!-- <div v-for="activity in activitiesWithCurrentMarker" v-bind:key="activity.id">
       {{ activty.name }}
     </div> -->
