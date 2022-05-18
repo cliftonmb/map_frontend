@@ -7,8 +7,10 @@ import LoginView from "../views/LoginView.vue";
 import LogoutView from "../views/LogoutView.vue";
 import FavoritesView from "../views/FavoritesView.vue";
 import FavoriteButton from "../views/FavoriteButton.vue";
+import ActivityInformation from "../views/ActivityInformation.vue";
 
 const routes = [
+  { path: "/activity_information", name: "activity information", component: ActivityInformation },
   { path: "/favorite_button", name: "favorite button", component: FavoriteButton },
   { path: "/favorites", name: "favorites", component: FavoritesView },
   { path: "/logout", name: "logout", component: LogoutView },
@@ -22,7 +24,8 @@ const routes = [
   {
     path: '/activities',
     name: 'activities',
-    component: ActivitiesView
+    component: ActivitiesView,
+    props: true
   },
   {
     path: '/',
