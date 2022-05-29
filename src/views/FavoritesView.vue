@@ -36,7 +36,6 @@ export default {
       <p>
         <router-link v-bind:to="`/activity_info/${favorite[0].id}`">More Info</router-link>
       </p>
-      <button v-on:click="destroyFavorites()">Remove From Favorites</button>
     </li>
   </div>
 </template>

@@ -88,28 +88,34 @@ export default {
 
     <section id="team" class="team">
       <div class="container">
-
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <div class="section-title" data-aos="fade-in" data-aos-delay="100">
           <h2>{{ activity.name }}</h2>
-          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint
-            consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat
-            sit
-            in iste officiis commodi quidem hic quas.</p>
+          <p></p>
         </div>
 
         <div class="row">
 
           <div class="col-lg-4 col-md-6">
             <div class="member" data-aos="fade-up">
-              <div class="pic"><img src="/assets/img/team/team-1.jpg" class="img-fluid" alt=""></div>
+              <!-- <div class="pic"><img src="/assets/img/team/team-1.jpg" class="img-fluid" alt=""></div> -->
               <div class="member-info">
-                <h4>Walter White</h4>
-                <span>Chief Executive Officer</span>
+                <h4>Learn More About {{ activity.name }}</h4>
+                <a v-if="activity.homepage !== null" v-bind:href="activity.homepage">Homepage
+                </a>
+                <!-- <span>{{ activity.twitter }}</span>
+                <span>{{ activity.homepage }}</span>
+                <span>{{ activity.instagram }}</span>
+                <span>{{ activity.ticketmaster }}</span> -->
                 <div class="social">
-                  <a href=""><i class="bi bi-twitter"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
+                  <a v-if="activity.twitter !== null" v-bind:href="activity.twitter"><i
+                      class="bi bi-twitter w3-jumbo"></i></a>
+                  <a v-if="activity.instagram !== null" v-bind:href="activity.instagram"><i
+                      class="bi bi-instagram w3-jumbo"></i></a>
+                  <a v-if="activity.ticketmaster !== null" v-bind:href="activity.ticketmaster"><i class="fa fa-ticket"
+                      style="font-size:80px"></i></a>
                 </div>
               </div>
             </div>
@@ -117,21 +123,23 @@ export default {
 
           <div class="col-lg-4 col-md-6">
             <div class="member" data-aos="fade-up" data-aos-delay="150">
-              <div class="pic"><img v-bind:src="activity.image_url" class="img-fluid" alt=""></div>
+              <div class="pic"><img v-bind:src="activity.image_url" class="img-fluid" alt="" height="50" width="500">
+              </div>
               <div class="member-info">
-                <h4>Sarah Jhonson</h4>
-                <!-- <img v-bind:src="activity.image_url" /> -->
-                <div class="static"><img v-if="favorited" v-on:click="destroyFavorites()"
-                    src="https://crissov.github.io/unicode-proposals/img/pink-heart_twemoji.svg" height="35" width="35">
+                <div class="relative"><img v-if="favorited" v-on:click="destroyFavorites()"
+                    src="https://crissov.github.io/unicode-proposals/img/pink-heart_twemoji.svg" height="50" width="50">
                   <img v-else v-on:click="createFavorites()"
-                    src="https://crissov.github.io/unicode-proposals/img/gray-heart_emojitwo.svg" height="35"
-                    width="35">
+                    src="https://crissov.github.io/unicode-proposals/img/gray-heart_emojitwo.svg" height="50"
+                    width="50">
                 </div>
+                <!-- <img v-bind:src="activity.image_url" /> -->
+                <p>Date: {{ activity.date }}</p>
+                <p>Start Time: {{ activity.start_time }}</p>
                 <div class="social">
-                  <a href=""><i class="bi bi-twitter"></i></a>
+                  <!-- <a href=""><i class="bi bi-twitter"></i></a>
                   <a href=""><i class="bi bi-facebook"></i></a>
                   <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
+                  <a href=""><i class="bi bi-linkedin"></i></a> -->
                 </div>
               </div>
             </div>
@@ -140,21 +148,21 @@ export default {
           <div class="col-lg-4 col-md-6">
             <div class="member" data-aos="fade-up" data-aos-delay="300">
               <div class="pic">
-                <section>Youtube<iframe width="640" height="360" v-bind:src="youtube" frameborder="0"
+                <section><iframe width="640" height="360" v-bind:src="youtube" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen></iframe></section>
               </div>
               <div class="member-info">
-                <h4>William Anderson</h4>
+                <h4></h4>
                 <!-- <section class="img-fluid"><iframe width="640" height="360" v-bind:src="youtube" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen></iframe></section> -->
-                <span>CTO</span>
+                <span></span>
                 <div class="social">
-                  <a href=""><i class="bi bi-twitter"></i></a>
+                  <!-- <a href=""><i class="bi bi-twitter"></i></a>
                   <a href=""><i class="bi bi-facebook"></i></a>
                   <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
+                  <a href=""><i class="bi bi-linkedin"></i></a> -->
                 </div>
               </div>
             </div>
@@ -178,10 +186,13 @@ img {
   width: 250px;
 }
 
-div.static {
-  position: static;
-  text-align: left;
+pic {
+  height: 400
+}
 
+div.relative {
+  position: relative;
+  center: 30px;
   /* border: 3px solid #73AD21; */
 }
 </style>

@@ -5,7 +5,7 @@ import mapboxgl from 'mapbox-gl'; // or "const mapboxgl = require('mapbox-gl');"
 export default {
   data: function () {
     return {
-      message: "Look At All The Activities!",
+      message: "Happenings",
       markers: [],
       activitiesWithCurrentMarker: [],
       activities: [],
@@ -177,14 +177,13 @@ export default {
 <template>
   <div class="home">
     <h1>{{ message }}</h1>
-    <a href="http://localhost:8080">Google</a>
     <label for="genre">Choose a category:</label>
 
     <p><select name="genre" id="genre" v-model="this.genre">
-        <option value="musicConcerts">Music/Concerts</option>
-        <option value="theaterComedy">Theater/Comedy</option>
+        <option value="Music/Concerts">Music/Concerts</option>
+        <option value="Theater/Comedy">Theater/Comedy</option>
         <option value="Sports">Sports</option>
-        <option value="other">Other</option>
+        <option value="Other">Other</option>
       </select></p>
 
     <label for="subGenre">Choose a sub category:</label>
@@ -193,7 +192,7 @@ export default {
         <option v-for="theSubGenre in subGenres" v-bind:key="theSubGenre.id">{{ theSubGenre }}</option>
         <!-- </div> -->
       </select></p>
-    <button v-on:click="selectGenre()">Confirm Category</button>
+    <button v-on:click="selectGenre()">See Happenings</button>
     <div id='map' style='width: 1000px; height: 800px;'></div>
     <!-- <div v-for="activity in activitiesWithCurrentMarker" v-bind:key="activity.id">
       {{ activty.name }}
